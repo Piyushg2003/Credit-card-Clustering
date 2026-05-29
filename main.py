@@ -126,9 +126,11 @@ explanation = [["Using Installment Purchase Only", "They make expensive purchase
                ["Low Financial", "This appears to be a small group of customers that using installment and cash advance from credit card. It is best to not focus strategies to this cluster as well, mainly due to its small group size."],
                ["Highest Average Credit Limit with All Types of Purchases", "The best marketing strategy for this cluster is to give credit points for every time they make transaction using credit card. These points would incentivies the customers to be loyal to the bank and reduce churn rates."]]
 
-st.markdown(f"""<div id="fill-recommendation"></div>""", unsafe_allow_html=True)
-st.markdown(f"""<span id="recommendation-1z2x">Cluster {prediction}:</span><span id="cluster-label">&nbsp;&nbsp;{explanation[prediction][0]}</span>""", unsafe_allow_html=True)
-st.markdown(f"""<p id="explanation-1z2x">{explanation[prediction][1]}</p>""", unsafe_allow_html=True)
+# Streamlit Native UI for Explanations
+st.markdown("---") # Adds a clean visual line break
+st.subheader(f"🎯 Predicted Segment: Cluster {prediction}")
+st.markdown(f"**Strategy:** {explanation[prediction][0]}")
+st.info(explanation[prediction][1]) # Puts the long text in a beautiful, auto-resizing blue box
 
 # FIX 2: Create a beautiful, multi-colored 3D map showing all clusters distinctly
 dbscan_labels = np.array(cluster_json["color"])
