@@ -85,25 +85,12 @@ st.text("")
 st.text("")
 
 # User inputs shown as a DataFrame
-st.text("User Input Dataframe:")
-st.write(input_df)
-
-# read MinMaxScaler and PCA model
-load_scaler = pickle.load(open('scaler_fitted.pkl', 'rb'))
-load_pca = pickle.load(open('pca_fitted.pkl', 'rb'))
-
-centers = np.array([[-0.59083384, -0.7881446 ,  0.03965857],
-                    [ 1.4101118 , -0.19984676, -0.02020388],
-                    [-0.16261439,  0.35734836, -0.88594748],
-                    [ 0.48122374,  0.80464824, -0.02944048],
-                    [-0.98090311,  0.1488673 , -0.1214479 ],
-                    [ 0.06820227, -0.22927245,  0.89944224],
-                    [-0.33326958,  0.63722453,  0.72909274]])
-
 # predict customer label to the nearest cluster
 def predict_customer(data):
     logscaled_data = np.log2(data + 0.01)
-    scaler_result = load_scaler.transform(logscaled_data.values.reshape(1,-1))
+    
+    # FIX 1: Pass the DataFrame directly so the Scaler reads the column names
+    scaler_result = load_scaler.transform(logscaled_data)
     
     pca_data = load_pca.transform(scaler_result)
     top3_pc = pca_data[:,:3].reshape(-1)
@@ -131,27 +118,20 @@ st.markdown(f"""<div id="fill-recommendation"></div>""", unsafe_allow_html=True)
 st.markdown(f"""<span id="recommendation-1z2x">Cluster {prediction}:</span><span id="cluster-label">&nbsp;&nbsp;{explanation[prediction][0]}</span>""", unsafe_allow_html=True)
 st.markdown(f"""<p id="explanation-1z2x">{explanation[prediction][1]}</p>""", unsafe_allow_html=True)
 
-# Display customer into highlighted clusters
-dbscan_labels = cluster_json["color"]
+# FIX 2: Create a beautiful, multi-colored 3D map showing all clusters distinctly
+dbscan_labels = np.array(cluster_json["color"])
+cluster_names = [f"Cluster {label}" for label in dbscan_labels]
 
-def getRestOfTheClusters(prediction):
-    """Function to pop a label out"""
-    labels = [i for i in range(7)]
-    labels.pop(prediction)
-    labels = [str(i) for i in labels]
-    return ", ".join(labels)
-
-restOfTheClusters = getRestOfTheClusters(prediction)
-# Move the desired label at the 0th index
-if prediction:
-    indexOfLabel = np.where(dbscan_labels == prediction)[0][0] # get first tuple, then get first index
-    dbscan_labels[0], dbscan_labels[indexOfLabel] = dbscan_labels[indexOfLabel], dbscan_labels[0]
-
-fig = px.scatter_3d(x = cluster_json["x"], 
-                    y = cluster_json["y"], 
-                    z = cluster_json["z"],
-                    color = np.where(dbscan_labels == prediction, f"Cluster {prediction}", f"Cluster {restOfTheClusters}"),
-                    color_discrete_sequence=["#3EFE06", "#C3C3C3"])
+fig = px.scatter_3d(
+    x = cluster_json["x"], 
+    y = cluster_json["y"], 
+    z = cluster_json["z"],
+    color = cluster_names, # This assigns a distinct color to every unique cluster
+    title = f"Customer Segmentation Map (Predicted Segment: Cluster {prediction})",
+    color_discrete_sequence=px.colors.qualitative.Set1 # A vibrant color palette
+)
 
 # display Plotly with Streamlit
+st.plotly_chart(fig, use_container_width=True)
+
 st.plotly_chart(fig, use_container_width=True)
