@@ -4,6 +4,7 @@ import numpy as np
 import pickle
 import json
 import plotly.express as px
+import sklearn
 
 st.set_page_config(page_title="Credit Card Clustering", page_icon="💳", layout="wide", initial_sidebar_state="expanded", menu_items=None)
 
@@ -85,6 +86,17 @@ st.text("")
 st.text("")
 
 # User inputs shown as a DataFrame
+# read MinMaxScaler and PCA model
+load_scaler = pickle.load(open('scaler_fitted.pkl', 'rb'))
+load_pca = pickle.load(open('pca_fitted.pkl', 'rb'))
+
+centers = np.array([[-0.59083384, -0.7881446 ,  0.03965857],
+                    [ 1.4101118 , -0.19984676, -0.02020388],
+                    [-0.16261439,  0.35734836, -0.88594748],
+                    [ 0.48122374,  0.80464824, -0.02944048],
+                    [-0.98090311,  0.1488673 , -0.1214479 ],
+                    [ 0.06820227, -0.22927245,  0.89944224],
+                    [-0.33326958,  0.63722453,  0.72909274]])
 # predict customer label to the nearest cluster
 def predict_customer(data):
     logscaled_data = np.log2(data + 0.01)
