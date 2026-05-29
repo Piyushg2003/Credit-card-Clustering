@@ -43,23 +43,24 @@ st.sidebar.text("Use these widgets to input values")
 
 # user inputs that will be retrieved from sidebar 
 def user_input_features():
-    BALANCE = st.sidebar.slider('BALANCE', 0.0, 20000.0, 10000.0)
-    BALANCE_FREQUENCY = st.sidebar.slider('BALANCE_FREQUENCY', 0.0, 1.0, 0.5)
-    PURCHASES = st.sidebar.slider('PURCHASES', 0.0, 50000.0, 25000.0)
-    ONEOFF_PURCHASES = st.sidebar.slider('ONEOFF_PURCHASES', 0.0, 45000.0, 22500.0)
-    INSTALLMENTS_PURCHASES = st.sidebar.slider('INSTALLMENTS_PURCHASES', 0.0, 22500.0, 11250.0)
-    CASH_ADVANCE = st.sidebar.slider('CASH_ADVANCE', 0.0, 50000.0, 25000.0)
-    PURCHASES_FREQUENCY = st.sidebar.slider('PURCHASES_FREQUENCY', 0.0, 1.0, 0.5)
-    ONEOFF_PURCHASES_FREQUENCY = st.sidebar.slider('ONEOFF_PURCHASES_FREQUENCY', 0.0, 1.0, 0.5)
-    PURCHASES_INSTALLMENTS_FREQUENCY = st.sidebar.slider('PURCHASES_INSTALLMENTS_FREQUENCY', 0.0, 50000.0, 25000.0)
-    CASH_ADVANCE_FREQUENCY = st.sidebar.slider('CASH_ADVANCE_FREQUENCY', 0.0, 1.0, 0.5)
-    CASH_ADVANCE_TRX = st.sidebar.slider('CASH_ADVANCE_TRX', 0.0, 150.0, 75.0)
-    PURCHASES_TRX = st.sidebar.slider('PURCHASES_TRX', 0.0, 400.0, 200.0)
-    CREDIT_LIMIT = st.sidebar.slider('CREDIT_LIMIT', 50.0, 30000.0, 15025.0)
-    PAYMENTS = st.sidebar.slider('PAYMENTS', 0.0, 55000.0, 27500.0)
-    MINIMUM_PAYMENTS = st.sidebar.slider('MINIMUM_PAYMENTS', 0.0, 80000.0, 40000.0)
-    PRC_FULL_PAYMENT = st.sidebar.slider('PRC_FULL_PAYMENT', 0.0, 1.0, 0.5)
-    TENURE = st.sidebar.slider('TENURE', 6.0, 12.0, 9.0)
+    # Changed the default (4th value) to 0.0 so you start with a clean slate
+    BALANCE = st.sidebar.slider('BALANCE', 0.0, 20000.0, 0.0)
+    BALANCE_FREQUENCY = st.sidebar.slider('BALANCE_FREQUENCY', 0.0, 1.0, 0.0)
+    PURCHASES = st.sidebar.slider('PURCHASES', 0.0, 50000.0, 0.0)
+    ONEOFF_PURCHASES = st.sidebar.slider('ONEOFF_PURCHASES', 0.0, 45000.0, 0.0)
+    INSTALLMENTS_PURCHASES = st.sidebar.slider('INSTALLMENTS_PURCHASES', 0.0, 22500.0, 0.0)
+    CASH_ADVANCE = st.sidebar.slider('CASH_ADVANCE', 0.0, 50000.0, 0.0)
+    PURCHASES_FREQUENCY = st.sidebar.slider('PURCHASES_FREQUENCY', 0.0, 1.0, 0.0)
+    ONEOFF_PURCHASES_FREQUENCY = st.sidebar.slider('ONEOFF_PURCHASES_FREQUENCY', 0.0, 1.0, 0.0)
+    PURCHASES_INSTALLMENTS_FREQUENCY = st.sidebar.slider('PURCHASES_INSTALLMENTS_FREQUENCY', 0.0, 50000.0, 0.0)
+    CASH_ADVANCE_FREQUENCY = st.sidebar.slider('CASH_ADVANCE_FREQUENCY', 0.0, 1.0, 0.0)
+    CASH_ADVANCE_TRX = st.sidebar.slider('CASH_ADVANCE_TRX', 0.0, 150.0, 0.0)
+    PURCHASES_TRX = st.sidebar.slider('PURCHASES_TRX', 0.0, 400.0, 0.0)
+    CREDIT_LIMIT = st.sidebar.slider('CREDIT_LIMIT', 50.0, 30000.0, 3000.0) # Set to a normal limit
+    PAYMENTS = st.sidebar.slider('PAYMENTS', 0.0, 55000.0, 0.0)
+    MINIMUM_PAYMENTS = st.sidebar.slider('MINIMUM_PAYMENTS', 0.0, 80000.0, 0.0)
+    PRC_FULL_PAYMENT = st.sidebar.slider('PRC_FULL_PAYMENT', 0.0, 1.0, 0.0)
+    TENURE = st.sidebar.slider('TENURE', 6.0, 12.0, 12.0) # 12 months is standard
     
     data = {'BALANCE': BALANCE,
             'BALANCE_FREQUENCY': BALANCE_FREQUENCY,
