@@ -148,4 +148,4 @@ fig = px.scatter_3d(
 # display Plotly with Streamlit
 st.plotly_chart(fig, use_container_width=True)
 
-st.plotly_chart(fig, use_container_width=True)
+
