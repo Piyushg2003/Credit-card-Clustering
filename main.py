@@ -90,7 +90,7 @@ def predict_customer(data):
     logscaled_data = np.log2(data + 0.01)
     
     # FIX 1: Pass the DataFrame directly so the Scaler reads the column names
-    scaler_result = load_scaler.transform(logscaled_data)
+    scaler_result = load_scaler.transform(logscaled_data.values.reshape(1,-1))
     
     pca_data = load_pca.transform(scaler_result)
     top3_pc = pca_data[:,:3].reshape(-1)
